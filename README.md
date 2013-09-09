@@ -13,3 +13,19 @@ same mp3 decoder from VLSI. You use the SD library to read 32 bytes from the mp3
 bytes to the mp3 decoder chip. This works really simple and good. Unfortunately using the SD
 library needs a lot of flash. So I try to reduce the amount of memory by implementing only the code
 which I need to read files. I don't need the api to create news files. 
+
+Reading memory from the sd card is really simple. You can read 512 bytes at once. By specifing
+the address of the memory block you will get the whole 512 bytes. Therefore 512 bytes of the ram is
+needed for reading. But we need more information. Reading the data from the sd card is not enough. 
+We need to understand the FAT(16/32) file system. The sd cards are formatted in FAT16 or FAT32 format. 
+If you have a 2 gb sd card then it will be formatted with FAT16. To open a file and to read it's
+content you have to read some sectors of the sd card to locate the data of the file:
+
+* Find the root directory
+* Find the first sector/cluster
+* Read the data
+* Locate the next sector/cluster
+* Read the data until the end of file is reached
+
+
+
